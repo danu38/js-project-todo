@@ -1,10 +1,19 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 const useTaskStore = create((set) => ({
   tasks: [],
-  addTask: (text) =>
+  addTask: (text, dueDate) =>
     set((state) => ({
-      tasks: [...state.tasks, { id: Date.now(), text, completed: false }],
+      tasks: [
+        ...state.tasks,
+        {
+          id: Date.now(),
+          text,
+          dueDate,
+          completed: false,
+          createdAt: new Date().toISOString()
+        },
+      ],
     })),
   removeTask: (id) =>
     set((state) => ({

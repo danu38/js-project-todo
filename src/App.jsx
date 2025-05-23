@@ -7,11 +7,12 @@ import TaskStats from './Components/TaskStats';
 export default function App() {
   const { tasks, addTask, removeTask, toggleTask } = useTaskStore();
   const [input, setInput] = useState('');
+  const [dueDate, setDueDate] = useState(''); // date state
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!input.trim()) return;
-    addTask(input.trim());
+    addTask(input.trim(),dueDate); // pass dueDate to addTask
     setInput('');
   };
 
@@ -19,8 +20,16 @@ export default function App() {
     <main className="min-h-screen bg-gray-100 p-4 flex flex-col items-center">
       <h1 className="text-2xl font-bold mb-4">Task Manager</h1>
       <div className="w-full max-w-md">
-        <TaskForm onSubmit={handleSubmit} input={input} setInput={setInput} />
-        <TaskList tasks={tasks} onToggle={toggleTask} onRemove={removeTask} />
+        <TaskForm 
+        onSubmit={handleSubmit} 
+        input={input} 
+        setInput={setInput}
+        dueDate={dueDate}            
+        setDueDate={setDueDate}  />
+        <TaskList 
+        tasks={tasks} 
+        onToggle={toggleTask} 
+        onRemove={removeTask} />
         <TaskStats tasks={tasks} />
       </div>
     </main>
