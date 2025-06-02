@@ -22,7 +22,7 @@ export default function TaskList({ tasks, onToggle, onRemove, onCompleteAll }) {
               : 'bg-blue-500 hover:bg-blue-600 text-white'
           }`}
         >
-          compplete all
+          Complete all
           </button>
           </div>
 
