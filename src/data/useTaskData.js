@@ -1,6 +1,9 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-const useTaskStore = create((set) => ({
+const useTaskStore = create(
+  persist(
+  (set) => ({
   tasks: [],
   addTask: (text, dueDate) =>
     set((state) => ({
@@ -29,6 +32,11 @@ const useTaskStore = create((set) => ({
     set((state) => ({
       tasks: state.tasks.map((task) => ({ ...task, completed: true })),
     })),
-}));
+}),
+ {
+      name: "task-storage", // key in localStorage
+    }
+  )
+);
 
 export default useTaskStore;

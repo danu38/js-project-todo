@@ -14,6 +14,7 @@ export default function TaskForm({ onSubmit, input, setInput,dueDate, setDueDate
     type="date"
         value={dueDate}
         onChange={(e) => setDueDate(e.target.value)}
+         placeholder="Due date"
         aria-label="Due date"
         className="border rounded px-3 py-2 w-full sm:w-48"
   />

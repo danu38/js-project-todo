@@ -1,34 +1,40 @@
-import { format } from "date-fns";
+import { format, isBefore, startOfDay } from 'date-fns';
 
 export default function TaskItem({ task, onToggle, onRemove }) {
-  return (
-    <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-white dark:bg-gray-800 px-4 py-3 rounded shadow transition-colors">
+ const today = startOfDay(new Date());
+  const isOverdue = task.dueDate && isBefore(new Date(task.dueDate), today) && !task.completed;
+
+    return (
+    <li className="flex justify-between items-center bg-white dark:bg-gray-700 px-4 py-2 rounded shadow">
       <span
         className={`flex-1 cursor-pointer ${
           task.completed
-            ? "line-through text-gray-400 dark:text-gray-500"
-            : "text-black dark:text-white"
+            ? 'line-through text-gray-400'
+            : isOverdue
+            ? 'text-red-600 font-semibold'
+            : ''
         }`}
         role="button"
         tabIndex={0}
         onClick={() => onToggle(task.id)}
-        onKeyDown={(e) => e.key === "Enter" && onToggle(task.id)}
+        onKeyDown={(e) => e.key === 'Enter' && onToggle(task.id)}
       >
-        <div className="font-medium">{task.text}</div>
+        {task.text}
         {task.dueDate && (
-          <div className="text-gray-500 dark:text-gray-400 text-sm">
-            Due: {format(new Date(task.dueDate), "dd/MM/yyyy")}
-          </div>
+          <span className="ml-2 text-sm text-gray-500 dark:text-gray-300">
+            (Due: {format(new Date(task.dueDate), 'dd/MM/yyyy')})
+          </span>
         )}
         {task.createdAt && (
-          <div className="text-gray-400 dark:text-gray-500 text-xs">
-            Added: {format(new Date(task.createdAt), "dd MMM yyyy, p")}
-          </div>
+          <span className="block text-xs text-gray-400 mt-1">
+            Added: {format(new Date(task.createdAt), 'dd MMM yyyy, p')}
+          </span>
         )}
       </span>
+
       <button
         onClick={() => onRemove(task.id)}
-        className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 mt-2 sm:mt-0 sm:ml-4 transition"
+        className="text-red-600 ml-4"
         aria-label={`Delete ${task.text}`}
       >
         ✕
