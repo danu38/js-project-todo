@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 
 export default function TaskItem({ task, onToggle, onRemove }) {
   return (
+    
     <li className="flex justify-between items-center bg-white px-4 py-2 rounded shadow">
       <span
         className={`flex-1 ${task.completed ? 'line-through text-gray-400' : ''}`}

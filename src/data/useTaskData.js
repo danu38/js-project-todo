@@ -11,7 +11,7 @@ const useTaskStore = create((set) => ({
           text,
           dueDate,
           completed: false,
-          createdAt: new Date().toISOString()
+          createdAt: new Date().toISOString(),
         },
       ],
     })),
@@ -25,10 +25,10 @@ const useTaskStore = create((set) => ({
         task.id === id ? { ...task, completed: !task.completed } : task
       ),
     })),
-    completeAllTasks: () =>
-  set((state) => ({
-    tasks: state.tasks.map((task) => ({ ...task, completed: true })),
-  })),
+  completeAllTasks: () =>
+    set((state) => ({
+      tasks: state.tasks.map((task) => ({ ...task, completed: true })),
+    })),
 }));
 
 export default useTaskStore;
