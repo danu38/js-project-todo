@@ -5,7 +5,7 @@ const useTaskStore = create(
   persist(
   (set) => ({
   tasks: [],
-  addTask: (text, dueDate) =>
+  addTask: (text, dueDate,  category = "General") =>
     set((state) => ({
       tasks: [
         ...state.tasks,
@@ -13,6 +13,7 @@ const useTaskStore = create(
           id: Date.now(),
           text,
           dueDate,
+          category,
           completed: false,
           createdAt: new Date().toISOString(),
         },

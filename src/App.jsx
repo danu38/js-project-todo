@@ -15,6 +15,9 @@ export default function App() {
   const [filterStatus, setFilterStatus] = useState("all"); // all, completed, uncompleted
   const [filterDate, setFilterDate] = useState(""); // yyyy-MM-dd
 
+  // new category state
+  const [category, setCategory] = useState("General");
+
   useEffect(() => {
     const root = window.document.documentElement;
     if (darkMode) {
@@ -43,8 +46,10 @@ export default function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!input.trim()) return;
-    addTask(input.trim(), dueDate); // pass dueDate to addTask
+    addTask(input.trim(), dueDate, category); // pass dueDate to addTask
     setInput("");
+    setCategory("General"); // reset to default after adding
+    setDueDate("");
   };
 
   return (
@@ -65,9 +70,11 @@ export default function App() {
           setInput={setInput}
           dueDate={dueDate}
           setDueDate={setDueDate}
+          category={category}
+          setCategory={setCategory}
         />
 
-{/* Filter controls */}
+        {/* Filter controls */}
         <div className="flex gap-4 mb-4 items-center justify-between">
           {/* Status filter */}
           <select
@@ -102,13 +109,12 @@ export default function App() {
           </button>
         </div>
 
-
         <TaskList
-         tasks={filteredTasks}
+          tasks={filteredTasks}
           onToggle={toggleTask}
           onRemove={removeTask}
           onCompleteAll={completeAllTasks}
-           darkMode={darkMode}
+          darkMode={darkMode}
           setDarkMode={setDarkMode}
         />
         <TaskStats tasks={filteredTasks} />
