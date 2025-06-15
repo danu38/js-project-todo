@@ -1,7 +1,20 @@
-export default function TaskForm({ onSubmit, input, setInput,dueDate, setDueDate,category, setCategory }) {
+export default function TaskForm({
+  onSubmit,
+  input,
+  setInput,
+  dueDate,
+  setDueDate,
+  category,
+  setCategory,
+  projectId,
+  setProjectId,
+  projects = [],
+}) {
   return (
-    <form onSubmit={onSubmit} 
-    className="flex flex-col sm:flex-row sm:items-center gap-2 mb-4 w-full">
+    <form
+      onSubmit={onSubmit}
+      className="flex flex-col sm:flex-row sm:items-center gap-2 mb-4 w-full"
+    >
       <input
         type="text"
         className="border rounded px-3 py-2 flex-1 w-full sm:w-auto"
@@ -11,13 +24,13 @@ export default function TaskForm({ onSubmit, input, setInput,dueDate, setDueDate
         aria-label="New task"
       />
       <input
-    type="date"
+        type="date"
         value={dueDate}
         onChange={(e) => setDueDate(e.target.value)}
-         placeholder="Due date"
+        placeholder="Due date"
         aria-label="Due date"
         className="border rounded px-3 py-2 w-full sm:w-48"
-  />
+      />
       <select
         value={category}
         onChange={(e) => setCategory(e.target.value)}
@@ -28,11 +41,24 @@ export default function TaskForm({ onSubmit, input, setInput,dueDate, setDueDate
         <option value="Housework">Housework</option>
         <option value="Shopping">Shopping</option>
         <option value="Work">Work</option>
-       
       </select>
-
-      <button  type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded w-full sm:w-auto">
+      <select
+        value={projectId}
+        onChange={(e) => setProjectId(e.target.value)}
+        className="border rounded px-3 py-2"
+        aria-label="Assign to project"
+      >
+        <option value="">No Project</option>
+        {projects.map((project) => (
+          <option key={project.id} value={project.id}>
+            {project.name}
+          </option>
+        ))}
+      </select>
+      <button
+        type="submit"
+        className="bg-blue-600 text-white px-4 py-2 rounded w-full sm:w-auto"
+      >
         Add
       </button>
     </form>

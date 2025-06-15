@@ -5,7 +5,7 @@ import TaskList from "./Components/TaskList";
 import TaskStats from "./Components/TaskStats";
 
 export default function App() {
-  const { tasks, addTask, removeTask, toggleTask, completeAllTasks } =
+  const { tasks, addTask, removeTask, toggleTask, completeAllTasks ,projects, addProject} =
     useTaskStore();
   const [input, setInput] = useState("");
   const [dueDate, setDueDate] = useState(""); // date state
@@ -17,6 +17,10 @@ export default function App() {
 
   // new category state
   const [category, setCategory] = useState("General");
+
+   const [selectedProjectId, setSelectedProjectId] = useState(null);
+  const [newProjectName, setNewProjectName] = useState("");
+
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -64,6 +68,48 @@ export default function App() {
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-center">
           Task Manager
         </h1>
+
+
+        {/* Add new project */}
+        <div className="mb-4 flex gap-2 items-center">
+          <input
+            type="text"
+            placeholder="New Project"
+            className="border rounded px-3 py-1 dark:bg-gray-700 dark:text-white"
+            value={newProjectName}
+            onChange={(e) => setNewProjectName(e.target.value)}
+          />
+          <button
+            onClick={() => {
+              if (newProjectName.trim()) {
+                addProject(newProjectName.trim());
+                setNewProjectName("");
+              }
+            }}
+            className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
+          >
+            Add Project
+          </button>
+        </div>
+
+        {/* Select project */}
+        <div className="mb-4">
+          <label className="mr-2 text-sm font-medium">Project:</label>
+          <select
+            value={selectedProjectId || ""}
+            onChange={(e) =>
+              setSelectedProjectId(e.target.value ? Number(e.target.value) : null)
+            }
+            className="border rounded px-3 py-1 dark:bg-gray-700 dark:text-white"
+          >
+            <option value="">All Projects</option>
+            {projects.map((proj) => (
+              <option key={proj.id} value={proj.id}>
+                {proj.name}
+              </option>
+            ))}
+          </select>
+        </div>
         <TaskForm
           onSubmit={handleSubmit}
           input={input}
